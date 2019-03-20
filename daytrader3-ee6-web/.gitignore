@@ -7,3 +7,4 @@
 /.settings/
 .factorypath
 /.gradle
+/.apt_generated_tests/
