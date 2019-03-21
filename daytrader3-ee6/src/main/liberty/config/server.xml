@@ -1,0 +1,86 @@
+<server>
+    <featureManager>
+        <feature>jsp-2.3</feature>
+        <feature>wasJmsServer-1.0</feature>
+        <feature>wasJmsClient-2.0</feature>
+        <feature>mdb-3.2</feature>
+        <feature>jdbc-4.1</feature>
+      	<feature>ejbLite-3.2</feature>
+      	<feature>distributedMap-1.0</feature>
+      	<feature>jpa-2.0</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>jaxb-2.2</feature>
+        <feature>jaxrs-2.0</feature>
+    </featureManager>
+
+
+    <authData id="TradeDataSourceAuthData" password="passw0rd" user="root"/>
+    <!--
+    <authData id="TradeAdminAuthData" password="passw0rd" user="wasadmin"/>
+  -->
+
+
+    <messagingEngine>
+        <queue id="TradeBrokerQueue"/>
+        <topicSpace id="TradeStreamerTopic"/>
+    </messagingEngine>
+    <jmsQueue id="TradeBrokerQueue" jndiName="jms/TradeBrokerQueue">
+        <properties.wasJms deliveryMode="NonPersistent" queueName="TradeBrokerJSD"/>
+    </jmsQueue>
+    <jmsTopic id="TradeStreamerTopic" jndiName="jms/TradeStreamerTopic">
+        <properties.wasJms deliveryMode="NonPersistent" topicName="TradeStreamerTopic" topicSpace="Trade.Topic.Space"/>
+    </jmsTopic>
+    <jmsActivationSpec id="TradeBrokerMDBSpec">
+        <properties.wasJms destinationType="javax.jms.Queue"/>
+    </jmsActivationSpec>
+    <jmsActivationSpec id="TradeStreamerMDBSpec">
+        <properties.wasJms destinationType="javax.jms.Topic"/>
+    </jmsActivationSpec>
+    <jmsQueueConnectionFactory id="TradeBrokerQCF" jndiName="jms/TradeBrokerQCF">
+        <properties.wasJms/>
+    </jmsQueueConnectionFactory>
+    <jmsTopicConnectionFactory id="TradeStreamerTCF" jndiName="jms/TradeStreamerTCF">
+        <properties.wasJms/>
+    </jmsTopicConnectionFactory>
+    <!--
+    <dataSource id="NoTxTradeDataSource" jdbcDriverRef="DB2_Using_IBM_JCC_Driver" jndiName="jdbc/NoTxTradeDataSource">
+        <properties.db2.jcc beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="tradedb" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" jmsOnePhaseOptimization="false" name="NoTxTradeDataSource" nonTransactionalDataSource="true" password="passw0rd" portNumber="50000" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" propagateClientIdentityUsingTrustedContext="false" reauthentication="false" retrieveMessagesFromServerOnGetMessage="true" serverName="172.23.50.114" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" user="db2inst1" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3"/>
+        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="50" minPoolSize="10" reapTime="180"/>
+    </dataSource>
+  -->
+
+  <dataSource containerAuthDataRef="TradeDataSourceAuthData" id="NoTxTradeDataSource" jndiName="jdbc/NoTxTradeDataSource" type="javax.sql.DataSource">
+    <jdbcDriver libraryRef="mariadbjdbc"/>
+    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/>
+    <!--<properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>-->
+  </dataSource>
+
+  <dataSource containerAuthDataRef="TradeDataSourceAuthData" id="TradeDataSource" jndiName="jdbc/TradeDataSource" type="javax.sql.DataSource">
+    <jdbcDriver libraryRef="mariadbjdbc"/>
+    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/>
+    <!--<properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>-->
+  </dataSource>
+
+
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint">
+    </httpEndpoint>
+    <!-- 
+    <application context-root="daytrader" id="daytrader" location="daytrader3.0.9-ee6-src.ear" name="daytrader">
+	     <classloader commonLibraryRef="apache-commons-lib"/>
+    </application>
+    -->
+    
+    <enterpriseApplication id="daytrader3-ee6" location="daytrader3-ee6-1.0-SNAPSHOT.ear" name="daytrader3-ee6">
+    	<classloader commonLibraryRef="apache-commons-lib"/>
+    </enterpriseApplication>
+
+    <library id="apache-commons-lib">
+  	   <fileset dir="${server.config.dir}/lib/commons" includes="*.jar"/>
+    </library>
+
+    <library id="mariadbjdbc">
+  		<fileset dir="${server.config.dir}/lib/mariadb" includes="*.jar"/>
+  	</library>
+
+    <applicationMonitor updateTrigger="mbean"/>
+</server>
