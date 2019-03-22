@@ -6,15 +6,15 @@
 FROM websphere-liberty:webProfile7
 
 #BINARIES: Add in all necessary application binaries
-COPY ./server.xml /config
-COPY ./binary/application/* /config/apps/
+COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/server.xml /config
+COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/dropins/daytrader3-ee6-1.0-SNAPSHOT.ear /config/apps/
 RUN mkdir /config/lib
-COPY ./binary/lib/* /config/lib/
+COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/lib/* /config/lib/
 
 #FEATURES: Install any features that are required
 USER root
 RUN apt-get update && apt-get dist-upgrade -y \
-&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/*
 RUN /opt/ibm/wlp/bin/installUtility install  --acceptLicense \
 	jsp-2.3 \
 	ejbLite-3.2 \

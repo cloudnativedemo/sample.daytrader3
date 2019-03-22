@@ -51,14 +51,14 @@
 
   <dataSource containerAuthDataRef="TradeDataSourceAuthData" id="NoTxTradeDataSource" jndiName="jdbc/NoTxTradeDataSource" type="javax.sql.DataSource">
     <jdbcDriver libraryRef="mariadbjdbc"/>
-    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/>
-    <!--<properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>-->
+    <!-- <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/> -->
+    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>
   </dataSource>
 
   <dataSource containerAuthDataRef="TradeDataSourceAuthData" id="TradeDataSource" jndiName="jdbc/TradeDataSource" type="javax.sql.DataSource">
     <jdbcDriver libraryRef="mariadbjdbc"/>
-    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/>
-    <!--<properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>-->
+    <!--<properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="3306" serverName="192.168.168.133" user="root"/>-->
+    <properties databaseName="tradedb" password="{xor}Lz4sLChvLTs=" portNumber="31075" serverName="icpproxy.cloudnativekube.com" user="root"/>
   </dataSource>
 
 
