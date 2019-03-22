@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd" version="6">
+  <description>Liberty Maven Plugin Parent</description>
+  <display-name>daytrader3-ee6</display-name>
+  <module>
+    <ejb>dt-ejb.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>Rest.war</web-uri>
+      <context-root>/daytrader3-ee6-rest</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>web.war</web-uri>
+      <context-root>/daytrader3-ee6-web</context-root>
+    </web>
+  </module>
+</application>
