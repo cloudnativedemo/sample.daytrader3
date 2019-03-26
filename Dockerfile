@@ -9,7 +9,7 @@ FROM websphere-liberty:webProfile7
 COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/server.xml /config
 COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/dropins/daytrader3-ee6-1.0-SNAPSHOT.ear /config/apps/
 RUN mkdir /config/lib
-COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/lib/* /config/lib/
+COPY ./daytrader3-ee6-wlpcfg/servers/daytrader3_Sample/lib /config/lib
 
 #FEATURES: Install any features that are required
 USER root
